@@ -46,4 +46,5 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'//Retrofit2
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'//ConverterFactory Gson
     compile 'com.squareup.retrofit2:converter-scalars:2.0.0-beta4'//ConverterFactory String
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4' //let Retrofit2 support use RxJava
 }

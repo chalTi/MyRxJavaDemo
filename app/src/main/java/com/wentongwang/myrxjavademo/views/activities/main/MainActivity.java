@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.getInfo();
+//                presenter.getInfo();
+                presenter.getInfoRxJava();
             }
         });
     }

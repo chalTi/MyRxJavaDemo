@@ -10,9 +10,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -35,6 +35,9 @@ public class MainActivityPresenter {
 
     }
 
+    /**
+     * Retrofit request
+     */
     public void getInfo(){
         String baseUrl = "https://api.douban.com/v2/movie/";
 
@@ -48,7 +51,8 @@ public class MainActivityPresenter {
         call.enqueue(new Callback<MovieEntity>() {
             @Override
             public void onResponse(Call<MovieEntity> call, Response<MovieEntity> response) {
-                mainView.showSomeThing(response.body().toString());
+                mainView.showSomeThing(response.body().getTitle());
+//                mainView.showSomeThing(response.body().toString());
             }
 
             @Override
@@ -59,12 +63,16 @@ public class MainActivityPresenter {
         });
     }
 
+    /**
+     * Retrofit+RxJava
+     */
     public void getInfoRxJava(){
         String baseUrl = "https://api.douban.com/v2/movie/";
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
 
         RxJavaService rxJavaService = retrofit.create(RxJavaService.class);
@@ -86,7 +94,7 @@ public class MainActivityPresenter {
 
                     @Override
                     public void onNext(MovieEntity movieEntity) {
-                        mainView.showSomeThing(movieEntity.toString());
+                        mainView.showSomeThing(movieEntity.getTitle());
                     }
                 });
 
